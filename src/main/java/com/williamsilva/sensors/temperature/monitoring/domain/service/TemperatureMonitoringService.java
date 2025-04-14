@@ -29,6 +29,10 @@ public class TemperatureMonitoringService {
 
     @Transactional
     public void processTemperatureReading(TemperatureLogData temperatureLogData) {
+        log.info("processTemperatureReading");
+        if (temperatureLogData.value().equals(10.5)) {
+            throw new RuntimeException("Test error");
+        }
         sensorMonitoringRepository.findById(new SensorId(temperatureLogData.sensorId()))
                 .ifPresentOrElse(
                         sensor -> handleSensorMonitoring(temperatureLogData, sensor),
