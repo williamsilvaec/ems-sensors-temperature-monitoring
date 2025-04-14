@@ -6,15 +6,15 @@ import io.hypersistence.tsid.TSID;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public record TemperatureLogOutput(
+public record TemperatureLogData(
         UUID id,
         TSID sensorId,
         OffsetDateTime registeredAt,
         Double value
 ) {
 
-    public static TemperatureLogOutput from(TemperatureLog temperatureLog) {
-        return new TemperatureLogOutput(
+    public static TemperatureLogData from(TemperatureLog temperatureLog) {
+        return new TemperatureLogData(
                 temperatureLog.getId().getValue(),
                 temperatureLog.getSensorId().getValue(),
                 temperatureLog.getRegisteredAt(),

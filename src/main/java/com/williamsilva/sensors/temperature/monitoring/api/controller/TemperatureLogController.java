@@ -1,6 +1,6 @@
 package com.williamsilva.sensors.temperature.monitoring.api.controller;
 
-import com.williamsilva.sensors.temperature.monitoring.api.model.TemperatureLogOutput;
+import com.williamsilva.sensors.temperature.monitoring.api.model.TemperatureLogData;
 import com.williamsilva.sensors.temperature.monitoring.domain.model.SensorId;
 import com.williamsilva.sensors.temperature.monitoring.domain.model.TemperatureLog;
 import com.williamsilva.sensors.temperature.monitoring.domain.repository.TemperatureLogRepository;
@@ -23,8 +23,8 @@ public class TemperatureLogController {
     }
 
     @GetMapping
-    public Page<TemperatureLogOutput> search(@PathVariable TSID sensorId, Pageable pageable) {
+    public Page<TemperatureLogData> search(@PathVariable TSID sensorId, Pageable pageable) {
         Page<TemperatureLog> page = temperatureLogRepository.findAllBySensorId(new SensorId(sensorId), pageable);
-        return page.map(TemperatureLogOutput::from);
+        return page.map(TemperatureLogData::from);
     }
 }
