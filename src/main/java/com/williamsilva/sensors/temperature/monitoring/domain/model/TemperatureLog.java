@@ -1,5 +1,6 @@
 package com.williamsilva.sensors.temperature.monitoring.domain.model;
 
+import com.williamsilva.sensors.temperature.monitoring.api.model.TemperatureLogData;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -25,6 +26,16 @@ public class TemperatureLog {
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "sensor_id", columnDefinition = "bigint"))
     private SensorId sensorId;
+
+    public TemperatureLog() {
+    }
+
+    private TemperatureLog(TemperatureLogId id, Double value, OffsetDateTime registeredAt, SensorId sensorId) {
+        this.id = id;
+        this.value = value;
+        this.registeredAt = registeredAt;
+        this.sensorId = sensorId;
+    }
 
     public TemperatureLogId getId() {
         return id;
@@ -67,5 +78,14 @@ public class TemperatureLog {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public static TemperatureLog from(TemperatureLogData data) {
+        return new TemperatureLog(
+                new TemperatureLogId(data.id()),
+                data.value(),
+                data.registeredAt(),
+                new SensorId(data.sensorId())
+        );
     }
 }
